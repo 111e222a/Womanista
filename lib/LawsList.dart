@@ -83,7 +83,7 @@ setState((){id=newId;
                           children: [
                             
                           SizedBox(height:20) ,
-                          RaisedButton(color:Colors.redAccent,child:Text("View Details",style:TextStyle(color:Colors.white)),onPressed:()=> UpdateId(index))  
+                          RaisedButton(color:Colors.redAccent,child:Text("Read More",style:TextStyle(color:Colors.white)),onPressed:()=> UpdateId(index))  
                             
                            ],
                         )),
