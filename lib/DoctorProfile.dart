@@ -101,7 +101,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
            
                       Padding(padding: const EdgeInsets.symmetric(horizontal:8.0),
                       
-                      child: Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas sapien turpis. \nDuis convallis pulvinar porta. Donec ex lorem, dignissim vel risus in, condimentum placerat metus. Mauris dictum in ante sed molestie. Pellentesque pretium eget ante vel consectetur. Donec vel mollis enim, vitae ultrices odio. Proin eu lacinia massa, a cursus dolor.  ",
+                      child: Text(doctorData.doctor[widget.id].profileDesc,
                       style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Color.fromARGB(255, 44, 44, 44))),
                     ), 
                       SizedBox(height:20),
