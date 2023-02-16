@@ -79,9 +79,9 @@ class _LawsDescState extends State<LawsDesc> {
                       style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Color.fromARGB(255, 44, 44, 44))),
                     ), 
                       SizedBox(height:20),
-                      Padding(padding: const EdgeInsets.symmetric(horizontal:8.0),
+                     // Padding(padding: const EdgeInsets.symmetric(horizontal:8.0),
                 
-                )],
+                ],
                 
               ),
                      ),
