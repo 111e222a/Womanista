@@ -6,13 +6,25 @@ import 'package:womanista/Doctor_Provider.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'DoctorList.dart';
 import 'LawsList.dart';
+import 'DoctorRequests.dart';
 import 'DoctorModuleApplicationForm.dart';
-
+import 'package:womanista/chat_provider.dart';
+import 'package:provider/provider.dart';
 
 
 void main() {
    
-  runApp(Menu());
+  runApp(
+    MultiProvider(
+      providers: [
+       
+        ChangeNotifierProvider(create: (_) => ChatProvider()),
+     
+      ],
+      child: Menu(),
+    ),
+  );
+    
 }
 class Menu extends StatelessWidget {
   const Menu({Key? key}) : super(key: key);
@@ -69,6 +81,15 @@ class _MyMenuState extends State<MyMenu> {
                child:RaisedButton(color:Colors.redAccent,child:Text("DoctorApplicationForm",style:TextStyle(color:Colors.white)),onPressed:()=> Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => DoctorFormApp()),
+                      ),
+                      ),
+  ) ,
+  SizedBox(height:20),
+  Padding(
+               padding: const EdgeInsets.symmetric(),
+               child:RaisedButton(color:Colors.redAccent,child:Text("DoctorRequestPage",style:TextStyle(color:Colors.white)),onPressed:()=> Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => DoctorRequestListApp()),
                       ),
                       ),
   ) ,

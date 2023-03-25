@@ -2,26 +2,27 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:womanista/Doctor_Provider.dart';
+import 'package:womanista/DoctorRequestProvider.dart';
 import 'DoctorProfile.dart';
+import 'chat_module.dart';
 
 //import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-class DoctorList extends StatelessWidget {
+class DoctorRequestList extends StatelessWidget {
   
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       
-      home: DoctorListApp(),
+      home: DoctorRequestListApp(),
     );
   }
 }
-class DoctorListApp extends StatefulWidget {
-  const DoctorListApp({Key? key}) : super(key: key);
+class DoctorRequestListApp extends StatefulWidget {
+  const DoctorRequestListApp({Key? key}) : super(key: key);
 
   @override
-  State<DoctorListApp> createState() => _DoctorListAppState();
+  State<DoctorRequestListApp> createState() => _DoctorRequestListAppState();
 }
 
 
@@ -42,19 +43,19 @@ Doctor(String Name,String Desc)
   
 }
 } */
-DoctorData doctorData= DoctorData();
+DoctorRequestData doctorData= DoctorRequestData();
 
 
 //List<List<Icon>>iconlist=[[Icons.star,Icons.star,Icons.star]];
 
-class _DoctorListAppState extends State<DoctorListApp> {
+class _DoctorRequestListAppState extends State<DoctorRequestListApp> {
   int id=0;
   void UpdateId(int newId)
   {
 setState((){id=newId;
  Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => DoctorProfile(id: id,)),
+                      MaterialPageRoute(builder: (context) => ChatScreen(id: id,)),
                     );
                     });
   }
@@ -65,7 +66,7 @@ setState((){id=newId;
            appBar: AppBar(
            automaticallyImplyLeading: false,
            backgroundColor:Colors.redAccent,
-           title:Text('Gynecologists',style:TextStyle(color:Colors.white)),
+           title:Text('Customer Requests',style:TextStyle(color:Colors.white)),
            centerTitle: true,
            elevation:0,
            ),
@@ -81,24 +82,23 @@ setState((){id=newId;
             //shape:RoundedRectangleBorder(side:BorderSide(color:Color.fromARGB(255, 230, 226, 226)),borderRadius:BorderRadius.circular(10)),
                     child: Center(
                       child: ListTile(
-                        title:Text(doctorData.doctor[index].Name +""),
+                        title:Text(doctorData.doctor[index].userName +""),
                         
                           subtitle:  Row(
                             children: [
-                              Text(doctorData.doctor[index].Desc),
+                              Text(doctorData.doctor[index].userQuery),
                               SizedBox(width: 20,),
-                              Icon(Icons.star,color:Colors.amber),
-                              Text("${doctorData.doctor[index].Rating}"),
+                             
                             ],
                           ),
                         
                           leading:
-                       Image.network("${doctorData.doctor[index].img}",width:57,height:57,fit:BoxFit.cover),
+                       Image.network("${doctorData.doctor[index].img}",width:59,height:59,fit:BoxFit.cover),
                         trailing: Column(
                           children: [
                             
                           SizedBox(height:20) ,
-                          RaisedButton(color:Colors.redAccent,child:Text("View Details",style:TextStyle(color:Colors.white)),onPressed:()=> UpdateId(index))  
+                          RaisedButton(color:Colors.redAccent,child:Text("Chat",style:TextStyle(color:Colors.white)),onPressed:()=> UpdateId(index))  
                             
                            ],
                         )),
