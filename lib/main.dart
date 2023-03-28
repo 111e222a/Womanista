@@ -1,4 +1,7 @@
 import 'dart:developer';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,8 +14,15 @@ import 'DoctorModuleApplicationForm.dart';
 import 'package:womanista/chat_provider.dart';
 import 'package:provider/provider.dart';
 
-
-void main() {
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options:const FirebaseOptions(apiKey: "AIzaSyBly_JlEz_b7k5U7rTI4UoR-2VWks2Hwy4",
+  authDomain: "womanista-27f5f.firebaseapp.com",
+  projectId: "womanista-27f5f",
+  storageBucket: "womanista-27f5f.appspot.com",
+  messagingSenderId: "357880895236",
+  appId: "1:357880895236:web:a7d998e6e4f2ff7de86251",
+  measurementId: "G-F4XETK7EWL"));
    
   runApp(
     MultiProvider(
@@ -46,6 +56,7 @@ class MyMenu extends StatefulWidget {
 
 class _MyMenuState extends State<MyMenu> {
   @override
+  
   Widget build(BuildContext context) {
     return Scaffold(
            backgroundColor: Colors.white,

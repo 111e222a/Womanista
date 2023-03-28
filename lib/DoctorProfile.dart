@@ -1,11 +1,17 @@
 import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:womanista/Doctor_Provider.dart';
+import 'package:womanista/DoctorList.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 DoctorData doctorData=DoctorData();
+
+final collection = FirebaseFirestore.instance.collection("Doctors");
+
 class DoctorAppointment extends StatelessWidget {
   const DoctorAppointment({Key? key}) : super(key: key);
 
@@ -20,8 +26,9 @@ class DoctorAppointment extends StatelessWidget {
 }
 class DoctorProfile extends StatefulWidget {
  
-const DoctorProfile({Key? key, this.id}) : super(key: key);
+  const DoctorProfile({Key? key, this.id}) : super(key: key);
   final id;
+
   @override
   
  
@@ -31,7 +38,16 @@ const DoctorProfile({Key? key, this.id}) : super(key: key);
 class _DoctorProfileState extends State<DoctorProfile> {
   void initState() {
     widget.id;
+   
+
+    
+  
+    loadData();
     super.initState();
+  }
+  loadData()
+  {
+
     
   }
   @override
@@ -55,7 +71,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     Row(
                       mainAxisAlignment:MainAxisAlignment.center,
                       children: [
-                        CircleAvatar(radius:100,backgroundColor:Colors.redAccent,backgroundImage:NetworkImage("https://png.pngtree.com/png-vector/20220901/ourmid/pngtree-female-doctor-avatar-icon-illustration-png-image_6134280.png")),
+                        CircleAvatar(radius:100,backgroundColor:Colors.redAccent,backgroundImage:NetworkImage("${Img[widget.id]}")),
                       ],
                     ),
                     SizedBox(height:10),
@@ -63,13 +79,13 @@ class _DoctorProfileState extends State<DoctorProfile> {
                     
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0),
-                      child: Text(doctorData.doctor[widget.id].Name,style:TextStyle(fontWeight:FontWeight.bold,fontSize:25,color:Colors.redAccent)),
+                      child: Text(Name[widget.id],style:TextStyle(fontWeight:FontWeight.bold,fontSize:25,color:Colors.redAccent)),
                     ),
                     SizedBox(height:6),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0),
                       
-                      child: Text("Gynecologist",style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Colors.redAccent)),
+                      child: Text(Desc[widget.id],style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Colors.redAccent)),
                     ),
                     SizedBox(height:16),
            
@@ -77,7 +93,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
                        padding: const EdgeInsets.all(6.0),
                        child: Container( 
                          child: RatingBar.builder(itemSize:20,
-   initialRating: doctorData.doctor[widget.id].Rating,
+   initialRating: Rating[widget.id],
    minRating: 1,
    direction: Axis.horizontal,
    allowHalfRating: true,
@@ -101,7 +117,7 @@ class _DoctorProfileState extends State<DoctorProfile> {
            
                       Padding(padding: const EdgeInsets.symmetric(horizontal:8.0),
                       
-                      child: Text(doctorData.doctor[widget.id].profileDesc,
+                      child: Text(ProfileDesc[widget.id],
                       style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Color.fromARGB(255, 44, 44, 44))),
                     ), 
                       SizedBox(height:20),

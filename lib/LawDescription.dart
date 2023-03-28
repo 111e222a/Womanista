@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:womanista/Laws_Provider.dart';
+import 'package:womanista/LawsList.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 LawsData lawsData=LawsData();
 class LawsInfo extends StatelessWidget {
@@ -55,7 +56,7 @@ class _LawsDescState extends State<LawsDesc> {
                     Row(
                       mainAxisAlignment:MainAxisAlignment.center,
                       children: [
-                        CircleAvatar(radius:100,backgroundColor:Colors.redAccent,backgroundImage:NetworkImage("https://images.unsplash.com/photo-1593115057322-e94b77572f20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60")),
+                        CircleAvatar(radius:100,backgroundColor:Colors.redAccent,backgroundImage:NetworkImage("${Img[widget.id]}")),
                       ],
                     ),
                     SizedBox(height:10),
@@ -63,19 +64,19 @@ class _LawsDescState extends State<LawsDesc> {
                     
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0),
-                      child: Text(lawsData.laws[widget.id].heading,style:TextStyle(fontWeight:FontWeight.bold,fontSize:25,color:Colors.redAccent)),
+                      child: Text(Heading[widget.id],style:TextStyle(fontWeight:FontWeight.bold,fontSize:25,color:Colors.redAccent)),
                     ),
                     SizedBox(height:6),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0),
                       
-                      child: Text(lawsData.laws[widget.id].subHeading,style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Colors.redAccent)),
+                      child: Text(Subheading[widget.id],style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Colors.redAccent)),
                     ),
                     SizedBox(height:16),
            
                       Padding(padding: const EdgeInsets.symmetric(horizontal:8.0),
                       
-                      child: Text(lawsData.laws[widget.id].desc,
+                      child: Text(Desc[widget.id],
                       style:TextStyle(fontWeight:FontWeight.normal,fontSize:17,color:Color.fromARGB(255, 44, 44, 44))),
                     ), 
                       SizedBox(height:20),

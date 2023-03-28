@@ -1,5 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:womanista/DoctorRequestProvider.dart';
@@ -28,25 +30,14 @@ class DoctorRequestListApp extends StatefulWidget {
 
 
 
-
-/* class Doctor{
-String Name="";
-String Desc="";
-
-
-
-Doctor(String Name,String Desc)
-{
-  this.Name=Name;
-  this.Desc=Desc;
- 
-  
-}
-} */
 DoctorRequestData doctorData= DoctorRequestData();
+var length=0;
+var Name=[];
+var Query=[];
+var Img=[];
+final collection = FirebaseFirestore.instance.collection("DoctorRequests");
+ 
 
-
-//List<List<Icon>>iconlist=[[Icons.star,Icons.star,Icons.star]];
 
 class _DoctorRequestListAppState extends State<DoctorRequestListApp> {
   int id=0;
@@ -58,6 +49,41 @@ setState((){id=newId;
                       MaterialPageRoute(builder: (context) => ChatScreen(id: id,)),
                     );
                     });
+  }
+  void initState()
+  {
+    loadData();
+    super.initState();
+  }
+  loadData()async
+  {
+    
+ 
+    var idx=1;
+    
+    doctorData.doctor.forEach((doc)
+    {
+    print(doc.userName);
+     
+     final store=  collection.doc('$idx').set({"Name":doc.userName,"Query":doc.userQuery,"Img":doc.img});
+     idx++;
+    });
+     
+    
+    //data=data.docs[i].data()["Name"];
+    //print(data);
+    collection.get().then((value){
+      value.docs.forEach((element){
+        setState(()
+        {
+        
+        Name.add(element.data()["Name"]);
+         
+        Img.add(element.data()["Img"]);
+        
+        Query.add(element.data()["Query"]);
+        length++;});});
+    });
   }
   @override
    Widget build(BuildContext context) {
@@ -75,25 +101,25 @@ setState((){id=newId;
              child: SizedBox(
                child: ListView.separated(
       separatorBuilder: (BuildContext context, int index) => SizedBox(height:10),
-        itemCount: doctorData.doctor.length,
+        itemCount: length,
         itemBuilder: (context, index) {
           return SizedBox(height:90,
             child: Card(
             //shape:RoundedRectangleBorder(side:BorderSide(color:Color.fromARGB(255, 230, 226, 226)),borderRadius:BorderRadius.circular(10)),
                     child: Center(
                       child: ListTile(
-                        title:Text(doctorData.doctor[index].userName +""),
+                        title:Text(Name[index] +""),
                         
                           subtitle:  Row(
                             children: [
-                              Text(doctorData.doctor[index].userQuery),
+                              Text(Query[index]),
                               SizedBox(width: 20,),
                              
                             ],
                           ),
                         
                           leading:
-                       Image.network("${doctorData.doctor[index].img}",width:59,height:59,fit:BoxFit.cover),
+                       Image.network("${Img[index]}",width:59,height:59,fit:BoxFit.cover),
                         trailing: Column(
                           children: [
                             

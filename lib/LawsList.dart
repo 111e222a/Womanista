@@ -4,8 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:womanista/Laws_Provider.dart';
 import 'LawDescription.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-//import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+var length=0;
+var Heading=[];
+var Subheading=[];
+var Img=[];
+
+var Desc=[];
+
+var data;
+LawsData Law= LawsData();
+final collection = FirebaseFirestore.instance.collection("Woman_Protection_Laws");
 class LawsList extends StatelessWidget {
   
   @override
@@ -44,6 +55,41 @@ setState((){id=newId;
                     );
                     });
   }
+  void initState()
+  {
+    loadData();
+    super.initState();
+  }
+  loadData()async
+  {
+    
+ 
+    var idx=1;
+    
+    Law.laws.forEach((law)
+    {
+     
+     
+     final store=  collection.doc('$idx').set({"Heading":law.heading,"Subheading":law.subHeading,"Desc":law.desc,"Img":law.img});
+     idx++;
+    });
+     
+    //data=await collection.get();
+    //data=data.docs[i].data()["Name"];
+    //print(data);
+    collection.get().then((value){
+      value.docs.forEach((element){
+        setState(()
+        {
+        Desc.add(element.data()["Desc"]);
+        Heading.add(element.data()["Heading"]);
+        Subheading.add(element.data()["Subheading"]);
+        Img.add(element.data()["Img"]);
+        
+        
+        length++;});});
+    });
+ }
   @override
    Widget build(BuildContext context) {
     return Scaffold(
@@ -60,25 +106,25 @@ setState((){id=newId;
              child: SizedBox(
                child: ListView.separated(
       separatorBuilder: (BuildContext context, int index) => SizedBox(height:10),
-        itemCount: lawsData.laws.length,
+        itemCount: length,
         itemBuilder: (context, index) {
           return SizedBox(height:90,
             child: Card(
             //shape:RoundedRectangleBorder(side:BorderSide(color:Color.fromARGB(255, 230, 226, 226)),borderRadius:BorderRadius.circular(10)),
                     child: Center(
                       child: ListTile(
-                        title:Text(lawsData.laws[index].heading +""),
+                        title:Text(Heading[index] +""),
                         
                           subtitle:  Row(
                             children: [
-                              Text(lawsData.laws[index].subHeading),
+                              Text(Subheading[index]),
                               SizedBox(width: 20,),
                              
                             ],
                           ),
                         
                           leading:
-                       Image.network("https://images.unsplash.com/photo-1593115057322-e94b77572f20?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y291cnR8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60",width:57,height:57,fit:BoxFit.cover),
+                       Image.network("${Img[index]}",width:57,height:57,fit:BoxFit.cover),
                         trailing: Column(
                           children: [
                             
